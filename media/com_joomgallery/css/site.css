@@ -1,0 +1,165 @@
+:root {
+  --jg-color-link: #000000;
+  --jg-color-hover: #000000;
+  --jg-gray-300: #dfe3e7;
+}
+
+.wrapper .container-main {
+  overflow: hidden;
+}
+.mt {
+  margin-top: 1rem !important;
+}
+.mb {
+  margin-bottom: 1rem !important;
+}
+.ml {
+  margin-left: 1rem !important;
+}
+.mr {
+  margin-right: 1rem !important;
+}
+
+/* List view */
+.jg_minithumb {
+  border: 0;
+  height: 80px;
+  width: 80px;
+}
+img.jg_minithumb {
+  max-height: 80px;
+  max-width: 80px;
+  object-fit: contain;
+  border: 1px solid #ddd;
+}
+table.itemList td [class^="icon-"],
+table.itemList td [class*=" icon-"],
+table.itemList th [class^="icon-"],
+table.itemList th [class*="icon-"] {
+  font-size: 1.4rem;
+}
+table.itemList td .btn-mini,
+table.itemList th .btn-mini {
+  border: 0;
+}
+table.itemList td.title-cell .tbody-icon,
+table.itemList th.title-cell .tbody-icon {
+  margin-right: 0.5rem;
+}
+.tbody-icon [class^="icon-"],
+.tbody-icon [class*=" icon-"],
+.tbody-icon [class^="fa-"],
+.tbody-icon [class*=" fa-"] {
+  color: var(--btn-color) !important;
+}
+table.itemList td.sort-cell .form-check-input,
+table.itemList th.sort-cell .form-check-input {
+  display: none;
+}
+
+/* Form view */
+.jg fieldset {
+  margin-bottom: 0.2em;
+}
+.jg .btn-group {
+  margin-bottom: 0;
+}
+
+/* Category view */
+.jg-gallery {
+  margin: 2em 0;
+}
+
+.jg-images {
+  display: grid;
+  gap: 2em;
+}
+
+.jg-images.columns-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.jg-images.columns-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.jg-images.columns-4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+@media (max-width: 992px) {
+  .jg-images[class*=" columns-"] {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .jg-images[class*=" columns-"] {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+.jg-image {
+  padding: 0;
+}
+
+.jg-image > .jg-image-thumbnail {
+  padding: 1em;
+  border: 1px solid var(--jg-gray-300);
+  border-radius: 0.25rem;
+}
+
+.jg-images[class*=" columns-"] > .jg-image > .jg-image-thumbnail > a {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  padding-bottom: 100%;
+}
+
+.jg-images[class*=" columns-"] > .jg-image > .jg-image-thumbnail > a > img {
+  position: absolute;
+  max-width: 100%;
+  max-height: 100%;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  object-fit: contain;
+}
+
+.jg-image > .jg-image-caption {
+  padding: 0.5em 0;
+  text-align: center;
+}
+
+a.jg-link:not(.btn) {
+  color: var(--jg-color-link);
+  text-decoration: none;
+}
+
+a.jg-link:not(.btn):hover, a.jg-link:not(.btn):focus {
+  color: var(--jg-color-hover);
+  text-decoration: underline 2px;
+}
+
+/* Single image view */
+.joom-image {
+  position: relative;
+  min-height: 100px;
+  width: 100%;
+}
+.joom-image > .joom-loader {
+  position: absolute;
+  text-align: center;
+  margin: 1rem auto;  
+  width: 100%;
+}
+.joom-image > img {
+  position: relative;
+  z-index: 2;
+  max-width: 100%;
+  background-color: var(--body-bg);
+}
+.joom-image.center > img {
+  display: block;
+  margin: 0 auto;
+}
