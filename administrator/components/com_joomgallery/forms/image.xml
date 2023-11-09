@@ -234,6 +234,70 @@
            description="JFIELD_META_KEYWORDS_DESC"
     />
 
+
+
+
+    <field name="exif_gpstags"
+           type="input"
+           class="inputbox"
+           filter="string"
+           default=""
+           label="COM_JOOMGALLERY_EXIF_DATA"
+    />
+
+    <field name="exif_GPSALITUDE"
+           type="input"
+           class="inputbox"
+           filter="string"
+           default=""
+           label="COM_JOOMGALLERY_GPS_GPSALTITUDE"
+    />
+
+    <field name="exif_gpstags"
+           type="input"
+           class="inputbox"
+           filter="string"
+           default=""
+           label="COM_JOOMGALLERY_EXIF_DATA"
+    />
+
+    <field name="x-axis"
+           type="input"
+           class="inputbox"
+           filter="int"
+           default=""
+           label="X-Axis"
+    />
+
+    <field name="y-axis"
+           type="input"
+           class="inputbox"
+           filter="int"
+           default=""
+           layout="joomla.form.field."
+           label="Y-Axis"
+    />
+
+    <field name="width"
+           type="input"
+           class="inputbox"
+           filter="int"
+           default=""
+           label="Width"
+    />
+
+    <field name="height"
+           type="input"
+           class="inputbox"
+           filter="int"
+           default=""
+           label="height"
+    />
+
+    <field name="imgmetadata" type="subform"
+           formsource="subform_imageimgmetadata.xml"
+           label="Metadata" description="Subform Field Description" />
+
     <field name="robots"
            type="list"
            default="0"
@@ -291,14 +355,14 @@
            label="COM_JOOMGALLERY_IMGDATE"
            description="COM_JOOMGALLERY_IMGDATE_DESC" />
 
-    <field name="imgmetadata"
-           type="editor"
+<!--    <field name="imgmetadata"
+           type="subform"
            editor="codemirror"
            buttons="false"
            default=""
            filter="JComponentHelper::filterText"
            label="COM_JOOMGALLERY_IMGMETADATA"
-           description="COM_JOOMGALLERY_IMGMETADATA_DESC" />
+           description="COM_JOOMGALLERY_IMGMETADATA_DESC" />-->
 
     <field name="params"
            type="subform"

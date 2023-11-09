@@ -48,14 +48,19 @@ class HtmlView extends JoomGalleryView
 		$this->state      = $this->get('State');
 		$this->item       = $this->get('Item');
 		$this->form       = $this->get('Form');
-    $this->config     = JoomHelper::getService('config');
-    $this->imagetypes = JoomHelper::getRecords('imagetypes');
+        $this->config     = JoomHelper::getService('config');
+        $this->imagetypes = JoomHelper::getRecords('imagetypes');
 
     if($this->item->id == 0)
     {
       // create a new image record
       $this->form->setFieldAttribute('image', 'required', true);
     }
+
+    //Load languages
+        $lang = Factory::getApplication()->getLanguage();
+        $lang->load(_JOOM_OPTION.'.exif', JPATH_ADMINISTRATOR.'/components/'._JOOM_OPTION);
+        $lang->load(_JOOM_OPTION.'.iptc', JPATH_ADMINISTRATOR.'/components/'._JOOM_OPTION);
 
 		// Check for errors.
 		if(count($errors = $this->get('Errors')))
@@ -90,6 +95,15 @@ class HtmlView extends JoomGalleryView
       }
       $this->addToolbarReplace();
       $this->modifyFieldsReplace();
+    }
+    else if($this->_layout == 'crop'){
+        if($this->item->id == 0)
+        {
+            throw new \Exception("View needs an image ID to be loaded.", 1);
+        }
+        $this->addToolbarCrop();
+        //$this->modifyFieldsReplace();
+
     }
     else
     {
@@ -252,6 +266,33 @@ class HtmlView extends JoomGalleryView
     // Add cancel button
     ToolbarHelper::cancel('image.cancel', 'JTOOLBAR_CANCEL');
   }
+
+    /**
+     * Add the page title and toolbar for the imagetype replace form.
+     *
+     * @return void
+     *
+     * @throws Exception
+     */
+    protected function addToolbarCrop()
+    {
+        Factory::getApplication()->input->set('hidemainmenu', true);
+
+        ToolbarHelper::title(Text::_('COM_JOOMGALLERY_IMAGES').' :: '.Text::_('COM_JOOMGALLERY_CROP'), "image");
+
+/*        $canDo = JoomHelper::getActions();
+
+        // Add replace button
+        if($canDo->get('core.edit'))
+        {
+            ToolbarHelper::save('image.crop', 'COM_JOOMGALLERY_CROP');
+        }*/
+        ToolbarHelper::save('image.crop', 'COM_JOOMGALLERY_CROP');
+
+
+        // Add cancel button
+        ToolbarHelper::cancel('image.cancel', 'JTOOLBAR_CANCEL');
+    }
 
   /**
 	 * Modify form fields according to view needs.

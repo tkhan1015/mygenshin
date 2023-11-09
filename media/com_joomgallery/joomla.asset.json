@@ -95,6 +95,19 @@
       "name": "com_joomgallery.uppy",
       "type": "style",
       "uri": "com_joomgallery/uppy.css"
+    },
+    {
+      "name": "com_joomgallery.cropper",
+      "type": "script",
+      "uri": "com_joomgallery/cropper.min.js",
+      "dependencies": [
+        "jquery"
+      ]
+    },
+    {
+      "name": "com_joomgallery.cropper",
+      "type": "style",
+      "uri": "com_joomgallery/cropper.min.css"
     }
   ]
 }

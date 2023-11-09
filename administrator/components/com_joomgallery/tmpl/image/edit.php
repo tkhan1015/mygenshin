@@ -21,8 +21,10 @@ use \Joomla\CMS\Language\Text;
 HTMLHelper::addIncludePath(JPATH_COMPONENT . '/helpers/html');
 $wa = $this->document->getWebAssetManager();
 $wa->useScript('keepalive')
-	 ->useScript('form.validate')
-   ->useStyle('com_joomgallery.admin');
+    ->useScript('form.validate')
+    ->useScript('com_joomgallery.cropper')
+    ->useStyle('com_joomgallery.cropper')
+    ->useStyle('com_joomgallery.admin');
 HTMLHelper::_('bootstrap.tooltip');
 
 $app = Factory::getApplication();
@@ -104,7 +106,6 @@ $tmpl    = $isModal || $app->input->get('tmpl', '', 'cmd') === 'component' ? '&t
           <?php echo $this->form->renderField('hits'); ?>
           <?php echo $this->form->renderField('downloads'); ?>
           <?php echo $this->form->renderField('imgvotesum'); ?>
-          <?php echo $this->form->renderField('imgmetadata'); ?>
         </div>          
       </fieldset>
     </div>
@@ -138,6 +139,41 @@ $tmpl    = $isModal || $app->input->get('tmpl', '', 'cmd') === 'component' ? '&t
 		</div>
 	</div>
 	<?php echo HTMLHelper::_('uitab.endTab'); ?>
+      <?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'CROP', "Image Metadata"); ?>
+      <div class="row">
+          <div class="col-12 col-lg-12">
+              <fieldset id="fieldset-metadata" class="options-form">
+                  <legend><?php echo "IPTC" ?></legend>
+                  <div>
+                      <?php echo $this->form->renderField('imgmetadata'); ?>
+<!--                      <?php /*echo $this->form->renderField('iptc_citylegacy'); */?>
+                      <?php /*echo $this->form->renderField('iptc_contact'); */?>
+                      <?php /*echo $this->form->renderField('iptc_copyright_notice'); */?>
+                      <?php /*echo $this->form->renderField('iptc_country_code_legacy'); */?>
+                      <?php /*echo $this->form->renderField('iptc_country_county'); */?>
+                      <?php /*echo $this->form->renderField('iptc_creator'); */?>
+                      <?php /*echo $this->form->renderField('iptc_creator_jobtitle'); */?>
+                      <?php /*echo $this->form->renderField('iptc_credit'); */?>
+                      <?php /*echo $this->form->renderField('iptc_date_created'); */?>
+                      <?php /*echo $this->form->renderField('iptc_desc'); */?>
+                      <?php /*echo $this->form->renderField('iptc_author'); */?>
+                      <?php /*echo $this->form->renderField('iptc_special_instructions'); */?>
+                      <?php /*echo $this->form->renderField('iptc_intellectualgenre'); */?>
+                      <?php /*echo $this->form->renderField('iptc_provinceorstatelegacy'); */?>
+                      <?php /*echo $this->form->renderField('iptc_source'); */?>
+                      <?php /*echo $this->form->renderField('iptc_location'); */?>
+                      --><?php /*echo $this->form->renderField('iptc_title'); */?>
+                  </div>
+              </fieldset>
+              <fieldset id="fieldset-metadata" class="options-form">
+                  <legend><?php echo "EXIF" ?></legend>
+                  <div>
+
+                  </div>
+              </fieldset>
+          </div>
+      </div>
+      <?php echo HTMLHelper::_('uitab.endTab'); ?>
 
 	<?php echo HTMLHelper::_('uitab.addTab', 'myTab', 'DisplayParams', Text::_('COM_JOOMGALLERY_PARAMETERS', true)); ?>
 	<div class="row">
@@ -181,7 +217,7 @@ $tmpl    = $isModal || $app->input->get('tmpl', '', 'cmd') === 'component' ? '&t
 // Image preview modal
 $options = array('modal-dialog-scrollable' => true,
                   'title'  => 'Test Title',
-                  'footer' => '<a id="replaceBtn" class="btn" href="'.Route::_('index.php?option=com_joomgallery&view=image&layout=replace&id='.(int) $this->item->id).'">'.Text::_('COM_JOOMGALLERY_REPLACE').'</a><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">'.Text::_('JCLOSE').'</button>',
+                  'footer' => '<a id="replaceBtn" class="btn" href="'.Route::_('index.php?option=com_joomgallery&view=image&layout=replace&id='.(int) $this->item->id).'">'.Text::_('COM_JOOMGALLERY_REPLACE').'</a><a id="cropBtn" class="btn" href="'.Route::_('index.php?option=com_joomgallery&view=image&layout=crop&id='.(int) $this->item->id).'">'.Text::_('COM_JOOMGALLERY_CROP').'</a><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">'.Text::_('JCLOSE').'</button>',
                 );
 
 echo HTMLHelper::_('bootstrap.renderModal', 'image-modal-box', $options, '<div id="modal-body">Content set by ajax.</div>');
@@ -195,6 +231,7 @@ echo HTMLHelper::_('bootstrap.renderModal', 'image-modal-box', $options, '<div i
     let modalTitle = modal.querySelector('.modal-title');
     let modalBody  = modal.querySelector('.modal-body');
     let modalBtn   = document.getElementById('replaceBtn');
+    let cropBtn   = document.getElementById('cropBtn');
 
     <?php
       $imgURL   = '{';
@@ -220,8 +257,20 @@ echo HTMLHelper::_('bootstrap.renderModal', 'image-modal-box', $options, '<div i
     modalBody.innerHTML  = body;
 
     modalBtn.href = modalBtn.href + '&type=' + typename;
+    cropBtn.href = cropBtn.href +'&type=' + typename;
 
     let bsmodal = new bootstrap.Modal(document.getElementById('image-modal-box'), {keyboard: false});
     bsmodal.show();
 	};
+
+      const image = document.getElementById("cropImage");
+      const cropper = new Cropper(image,{
+          aspectRatio: 1,
+          viewMode: 0,
+      });
+
+      document.getElementById("cropImageBtn").addEventListener('click',function(){
+          var cropImage = cropper.getCroppedCanvas().toDataURL("image/png");
+          document.getElementById("cropoutput").src = cropImage
+      })
 </script>
